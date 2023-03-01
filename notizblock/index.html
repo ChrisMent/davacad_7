@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/davacad_7/notizblock/styles/style.css" />
+    <link rel="stylesheet" href="/davacad_7/notizblock/fonts/font/font.css" />
+    <link rel="stylesheet" href="/davacad_7/notizblock/fonts/fontawesome/css/all.css" />
+    <script src="/davacad_7/notizblock/scripts/script.js"></script>
+    <meta name="description" content="" />
+    <title>Notizblock</title>
+
+    <link rel="stylesheet" href="/davacad_7/notizblock/templates/header.html">
+
+</head>
+
+<body onload="includeHTML()">
+    <header class="header" w3-include-html="/davacad_7/notizblock/templates/header.html"></header>
+    <main class="spacing-layer">
+
+        <menu>
+            <div id="menu-icons" class="not-expanded">
+                <div class="menu-icon-text m-small">
+                    <img src="img/lightbulb-regular.svg" alt="Show Notes">
+                </div>
+                <div class="menu-icon-text m-small">
+                    <img src="img/circle-down-regular.svg" alt="Remove to archive">
+                </div>
+                <div class="menu-icon-text m-small">
+                    <img src="img/trash-can-regular.svg" alt="Remove to trash">
+                </div>
+            </div>
+
+        </menu>
+
+        <section id="notes">
+            <div class="notes-position">
+                <div class="text">
+                    <textarea id="autoresizing" placeholder="Write your notes..." class="autosize"></textarea>
+
+                    <div class="icons">
+                        <div><img src="/davacad_7/notizblock/img/push_pin.svg" alt="Pin Task"></div>
+                        <div><img src="/davacad_7/notizblock/img/close.svg" alt="Close Task"></div>
+                        <div><img src="/davacad_7/notizblock/img/save.svg" alt="Save Task"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+
+        let icons = document.getElementById("menu-icons");
+        let icon = icons.getElementsByClassName("menu-icon-text");
+
+
+        for (let i = 0; i < icon.length; i++) {
+            icon[i].addEventListener("click", function () {
+                let current = document.getElementsByClassName("active");
+                if (current.length > 0) {
+                    current[0].className = current[0].className.replace(" active", "");
+                }
+                this.className += " active";
+            });
+        }
+
+        // Verstehe ich nicht richtig
+
+        textarea = document.querySelector("#autoresizing");
+        textarea.addEventListener('input', autoResize, false);
+
+        function autoResize() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        }
+    </script>
+
+    <footer w3-include-html="/davacad_7/notizblock/templates/footer.html"></footer>
+</body>
+
+</html>

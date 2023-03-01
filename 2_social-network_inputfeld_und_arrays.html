@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        padding: 20px;
+
+    }
+
+    .post {
+        width: 500px;
+        height: 150px;
+        border: 1px solid lightblue;
+        padding: 8px;
+        margin-top: 16px;
+
+
+    }
+</style>
+
+<script>
+
+    let smPosts = [];
+
+    function addPost() {
+        let postText = document.getElementById('message').value;
+        smPosts.push(postText);
+
+        let myposts = document.getElementById('myposts')
+        myposts.innerHTML = '';
+        for (let i = 0; i < smPosts.length; i++) {
+            myposts.innerHTML += `<div class="post">
+                ${smPosts[i]}
+                </div>
+                `;
+        }
+        document.getElementById('message').value = ''
+
+    }
+
+</script>
+
+<input id="message" type="text" placeholder="Neuer Post...">
+<button onclick="addPost()">Posten</button>
+
+<div id="myposts">
+
+
+
+</div>
+
+
+</body>
+
+</html>

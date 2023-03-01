@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Contacts</title>
+</head>
+
+<style>
+    .card {
+
+        box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%);
+        padding: 8px;
+        margin-bottom: 32px;
+    }
+</style>
+
+<script>
+
+    let names = []
+    let numbers = []
+    load()
+
+    function newContacts() {
+        let newName = document.getElementById('addname').value
+        let newPhone = document.getElementById('addphone').value
+        if (newName == '' || newPhone == '') {
+            if (newName == '') {
+                document.getElementById('contacts').innerHTML = `  <h1>Bitte fügene einen Namen hinzu!</h1>
+                 `;
+            } else if (newPhone == '') {
+                document.getElementById('contacts').innerHTML = `
+                 <h1>Bitte fügene eine Telefonnummer hinzu!</h1>
+                 `;
+            }
+            return;
+        } else {
+
+            names.push(newName)
+            numbers.push(newPhone)
+            document.getElementById('addname').value = ''
+            document.getElementById('addphone').value = ''
+            genCards()
+            save()
+
+        }
+    }
+
+    function genCards() {
+        let contact = document.getElementById('contacts')
+        contact.innerHTML = ''
+        contact.innerHTML += `<h1>My Contacts</h1>`
+        for (i = 0; i < names.length; i++) {
+            const name = names[i]
+            const number = numbers[i]
+
+            document.getElementById('contacts').innerHTML +=
+                `
+            <div class="card">
+                    
+                    <b>Name: </b>${name} <br>
+                    <b>Phone: </b>${number}
+                    <button onclick="deleteContact(${i})">delete</button>
+            </div>
+            `
+
+
+        }
+
+    }
+
+    function deleteContact(i) {
+        names.splice(i, 1)
+        numbers.splice(i, 1)
+        genCards()
+        save()
+
+    }
+
+    function save() {
+        let namesAsText = JSON.stringify(names)
+        let numbersAsText = JSON.stringify(numbers)
+        localStorage.setItem('namesStorage', namesAsText)
+        localStorage.setItem('numbersStorage', numbersAsText)
+
+    }
+
+    function load() {
+        let namesAsText = localStorage.getItem('namesStorage')
+        let numbersAsText = localStorage.getItem('numbersStorage')
+
+        if (namesAsText && numbersAsText) {
+            names = JSON.parse(namesAsText)
+            numbers = JSON.parse(numbersAsText)
+        }
+    }
+
+</script>
+
+<body>
+
+    <div class="addcards">
+
+        <input id="addname" type="text" placeholder="Name">
+        <input id="addphone" type="text" placeholder="Phone">
+        <button onclick="newContacts()" id="addcontacts">Add</button>
+
+
+    </div>
+
+    <div id="contacts">
+
+
+    </div>
+
+
+    <div id="content">
+
+    </div>
+</body>
+
+</html>
