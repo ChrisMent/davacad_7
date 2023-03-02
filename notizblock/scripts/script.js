@@ -1,3 +1,9 @@
+//! Globale Variablen
+
+let note = []; // für Zeilenumbrüche und Notizen
+
+//! Header und Footer in index.html laden
+
 async function includeHTML() {
     let includeElements = document.querySelectorAll("[w3-include-html]");
     for (let i = 0; i < includeElements.length; i++) {
@@ -12,98 +18,93 @@ async function includeHTML() {
     }
 }
 
+//! Den Text bei den Kategoriensymbolen auf und zu
+
 function toggleMenu() {
 
-    let toogle = document.getElementById('menu-icons').classList
+    // Es wird nach allen Elementen gesucht, die die Klasse 'menu-icon-text' haben
+    let elements = document.querySelectorAll('.menu-icon-text');
+    // Es wird eine Schleife erstellt, die jedes Element durchläuft
+    elements.forEach((element) => {
+        // Es wird nach dem ersten Link-Element innerhalb eines Elements mit der Klasse 'menu-icon-text' gesucht.
+        let a = element.querySelector('a');
+        if (a.classList.contains('d-none')) {
+            a.classList.remove('d-none');
+        } else {
+            a.classList.add('d-none');
+        }
+    });
+}
 
-    if (toogle == 'expanded') {
+//! Inhalt Textarea löschen
 
-        document.getElementById('menu-icons').innerHTML = `
-        
-                <div class="menu-icon-text m-small">
-                    <img src="img/lightbulb-regular.svg" alt="Show Notes">
+function clearTextArea() {
+    let clear = document.getElementById('autoresizing');
+    clear.value = ''
+
+}
+
+//! Notizen hinzufügen
+
+function addNote() {
+    let noteText = document.getElementById('autoresizing').value;
+    let noteArray = noteText.split("\n");
+    let noteString = noteArray.join("<br>");
+    note.push(noteString);
+
+    let myNotes = document.getElementById('mynotes')
+    myNotes.innerHTML = '';
+    loadNotes()
+    for (let i = 0; i < note.length; i++) {
+        myNotes.innerHTML += `
+
+<br>
+                <label>CATEGORY: OPEN</label>
+                <div class="note-box">
+                    <div class="notes">
+                        <div class="content">${note[i]}</div>
+                        <div class="dialog">
+                            <div><img src="/davacad_7/notizblock/img/bookmark-regular-not-active.svg" alt="Pin Task">
+                            </div>
+                            <div><img src="/davacad_7/notizblock/img/pen-to-square-solid.svg" alt="Edit Task">
+                            </div>
+                            <div><img src="/davacad_7/notizblock/img/circle-down-regular.svg" alt="Archive Note"></div>
+                            <div><img src="/davacad_7/notizblock/img/trash-can-regular.svg" alt="Trash Note"></div>
+
+                        </div>
+
+                    </div>
+
                 </div>
-                <div class="menu-icon-text m-small">
-                    <img src="img/circle-down-regular.svg" alt="Remove to archive">
-                </div>
-                <div class="menu-icon-text m-small">
-                    <img src="img/trash-can-regular.svg" alt="Remove to trash">
-                </div>
-        
-        `
-        document.getElementById('menu-icons').classList.remove('expanded')
-        document.getElementById('menu-icons').classList.add('not-expanded')
-        // Der Reload wir ausgeführt weil nach dem Togglen das Marieren der aktiven Kategorie nicht mehr funktioniert.
-        window.location.reload()
-
-    } else {
-
-        inputNewValues()
-        saveStateMenu()
-        markActiveCategory()
-
+                `;
     }
-
-}
-
-function inputNewValues() {
-
-    document.getElementById('menu-icons').innerHTML = `
-        
-                <div class="menu-icon-text">
-                    <a href="#index"><img src="img/lightbulb-regular.svg" alt="Show Notes">Notes</a>
-
-                </div>
-                <div class="menu-icon-text">
-                    <a href="#archive"><img src="img/circle-down-regular.svg" alt="Remove to archive">Archive</a>
-                </div>
-                <div class="menu-icon-text">
-                    <a href="#trash"><img src="img/trash-can-regular.svg" alt="Remove to trash">Trash</a>
-                </div>
-    
-    `
-    document.getElementById('menu-icons').classList.add('expanded')
-    document.getElementById('menu-icons').classList.remove('not-expanded')
+    document.getElementById('autoresizing').value = ''
+    saveNotes();
 }
 
 
 
-function saveStateMenu() {
+//! Notizen speichern
 
-    // Save new entry in "menu-icons"
-
-    let saveState = document.getElementById('menu-icons').innerHTML
-    localStorage.setItem('showMenu', saveState)
-
+function saveNotes() {
+    let newNote = JSON.stringify(note);
+    localStorage.setItem('activeNote', newNote)
 }
 
-function markActiveCategory() {
+//! Gespeicherte Notizen laden
 
-    // Verstehe ich nicht
-
-    let icons = document.getElementById("menu-icons");
-    let icon = icons.getElementsByClassName("menu-icon-text");
-
-    for (let i = 0; i < icon.length; i++) {
-        icon[i].addEventListener("click", function () {
-            let current = document.getElementsByClassName("active");
-            if (current.length > 0) {
-                current[0].className = current[0].className.replace(" active", "");
-            }
-            this.className += " active";
-        });
+function loadNotes() {
+    let newNote = localStorage.getItem('activeNote')
+    if (newNote) {
+        note = JSON.parse(newNote)
     }
-
+    return note;
 }
 
+//! Notiz löschen
 
+//! Noitzen einer bestimmten Kategory zuordnen
 
+//! Notiz anpinnen
 
-
-
-
-
-
-
-
-
+//! Notizen filtern

@@ -19,34 +19,60 @@
 
 <body>
 
-    <div id="wrapper">
+    <menu>
+        <div id="menu-icons" class="not-expanded">
+            <div class="menu-icon-text">
+                <img src="img/lightbulb-regular.svg" alt="Show Notes">
+                <a class="d-none" href="#index">Notes</a>
 
-        <div class="text">
-
-            <textarea id="autoresizing" placeholder="Write your notes..." class="autosize">
-
-            </textarea>
-
-
-            <div id="button">
-                <button class="btn">Close</button>
+            </div>
+            <div class="menu-icon-text">
+                <img src="img/circle-down-regular.svg" alt="Remove to archive">
+                <a class="d-none" href="#archive">Archive</a>
+            </div>
+            <div class="menu-icon-text">
+                <img src="img/trash-can-regular.svg" alt="Remove to trash">
+                <a class="d-none" href="#trash">Trash</a>
             </div>
         </div>
 
+        <button onclick="toggleClass()">Klick</button>
+
+    </menu>
 
 
 
-    </div>
+
 
 
     <script>
+        function toggleClass() {
+            // Es wird nach allen Elementen gesucht, die die Klasse 'menu-icon-text' haben
+            let elements = document.querySelectorAll('.menu-icon-text');
+            // Es wird eine Schleife erstellt, die jedes Element durchläuft
+            elements.forEach((element) => {
+                // Es wird nach dem ersten Link-Element innerhalb eines Elements mit der Klasse 'menu-icon-text' gesucht.
+                let a = element.querySelector('a');
+                if (a.classList.contains('d-none')) {
+                    a.classList.remove('d-none');
+                } else {
+                    a.classList.add('d-none');
+                }
+            });
+        }
 
-        textarea = document.querySelector("#autoresizing");
-        textarea.addEventListener('input', autoResize, false);
+        let icons = document.getElementById("menu-icons");
+        let icon = icons.getElementsByClassName("menu-icon-text");
 
-        function autoResize() {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
+
+        for (let i = 0; i < icon.length; i++) {
+            icon[i].addEventListener("click", function () {
+                let current = document.getElementsByClassName("active");
+                if (current.length > 0) {
+                    current[0].className = current[0].className.replace(" active", "");
+                }
+                this.className += " active";
+            });
         }
     </script>
 

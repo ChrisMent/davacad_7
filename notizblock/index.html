@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
@@ -21,15 +21,19 @@
     <main class="spacing-layer">
 
         <menu>
-            <div id="menu-icons" class="not-expanded">
-                <div class="menu-icon-text m-small">
-                    <img src="img/lightbulb-regular.svg" alt="Show Notes">
+            <div id="menu-icons">
+                <div class="menu-icon-text">
+                    <img src="img/lightbulb-regular.svg" alt="Show open notes">
+                    <a class="d-none" href="#index">Notes</a>
+
                 </div>
-                <div class="menu-icon-text m-small">
+                <div class="menu-icon-text">
                     <img src="img/circle-down-regular.svg" alt="Remove to archive">
+                    <a class="d-none" href="#archive">Archive</a>
                 </div>
-                <div class="menu-icon-text m-small">
+                <div class="menu-icon-text">
                     <img src="img/trash-can-regular.svg" alt="Remove to trash">
+                    <a class="d-none" href="#trash">Trash</a>
                 </div>
             </div>
 
@@ -41,47 +45,48 @@
                     <textarea id="autoresizing" placeholder="Write your notes..." class="autosize"></textarea>
 
                     <div class="icons">
-                        <div><img src="/davacad_7/notizblock/img/push_pin.svg" alt="Pin Task"></div>
-                        <div><img src="/davacad_7/notizblock/img/close.svg" alt="Close Task"></div>
-                        <div><img src="/davacad_7/notizblock/img/save.svg" alt="Save Task"></div>
+                        <div><img onclick="clearTextArea()" src="/davacad_7/notizblock/img/square-minus-regular.svg"
+                                alt="Clear Task">
+                        </div>
+                        <div><img onclick="addNote()" src="/davacad_7/notizblock/img/floppy-disk-regular.svg"
+                                alt="Save Task">
+                        </div>
+
+
                     </div>
                 </div>
 
 
             </div>
 
+            <div id="mynotes">
+                <label>CATEGORY: OPEN</label>
+                <div class="note-box">
+                    <div class="notes">
+                        <div class="content"></div>
+                        <div class="dialog">
+                            <div><img src="/davacad_7/notizblock/img/bookmark-regular-not-active.svg" alt="Pin Task">
+                            </div>
+                            <div><img src="/davacad_7/notizblock/img/pen-to-square-solid.svg" alt="Edit Task">
+                            </div>
+                            <div><img src="/davacad_7/notizblock/img/circle-down-regular.svg" alt="Archive Note"></div>
+                            <div><img src="/davacad_7/notizblock/img/trash-can-regular.svg" alt="Trash Note"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
         </section>
+
 
     </main>
 
-    <script>
-
-        let icons = document.getElementById("menu-icons");
-        let icon = icons.getElementsByClassName("menu-icon-text");
-
-
-        for (let i = 0; i < icon.length; i++) {
-            icon[i].addEventListener("click", function () {
-                let current = document.getElementsByClassName("active");
-                if (current.length > 0) {
-                    current[0].className = current[0].className.replace(" active", "");
-                }
-                this.className += " active";
-            });
-        }
-
-        // Verstehe ich nicht richtig
-
-        textarea = document.querySelector("#autoresizing");
-        textarea.addEventListener('input', autoResize, false);
-
-        function autoResize() {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-        }
-    </script>
 
     <footer w3-include-html="/davacad_7/notizblock/templates/footer.html"></footer>
+    <script src="/davacad_7/notizblock/scripts/eventhandling.js"></script>
 </body>
 
 </html>
